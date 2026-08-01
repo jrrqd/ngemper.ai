@@ -1,0 +1,50 @@
+<h2>Design §4 — TDD, errors, visuals, deploy</h2>
+<p class="subtitle">Last design section before we write the spec. Approve if this matches what you want.</p>
+
+<div class="section">
+  <div class="label">TDD (domain-only)</div>
+  <ol style="line-height:1.6;margin:0.5rem 0 0;padding-left:1.25rem;">
+    <li>Scaffold Astro + Vitest</li>
+    <li>Red → green: <code>totals</code></li>
+    <li>Red → green: <code>rankRoutes</code></li>
+    <li>Red → green: <code>composePlan</code> + JSON invariants</li>
+    <li>Then UI (no Playwright)</li>
+  </ol>
+</div>
+
+<div class="section">
+  <div class="label">Errors</div>
+  <ul style="line-height:1.6;margin:0.5rem 0 0;padding-left:1.25rem;">
+    <li>Same city blocked in picker</li>
+    <li>Bad share URL → toast, no crash</li>
+    <li>Missing Maps key → placeholder locally</li>
+    <li><strong>Netlify must have a working Maps key</strong> for the demo</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="label">Visuals</div>
+  <p>Generate hero + ~8–12 snapshot PNGs into <code>public/</code>. SEA overland documentary look (warm daylight / indigo dusk).</p>
+</div>
+
+<div class="section">
+  <div class="label">Deploy gate</div>
+  <p>Public Netlify URL must pass: Bogor→Bangkok pitch · composed pair · share restore · map loads · 360px no horizontal scroll.</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>Approve §4</h3>
+      <p>Write the design spec next.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="changes" onclick="toggleSelect(this)">
+    <div class="letter">✎</div>
+    <div class="content">
+      <h3>Want changes</h3>
+      <p>Say what to change in the chat.</p>
+    </div>
+  </div>
+</div>
