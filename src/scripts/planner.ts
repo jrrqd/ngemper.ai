@@ -142,12 +142,65 @@ function renderSnapshot(m: Milestone, index: number): string {
     </p>`;
 }
 
+const MENU_ACTIONS = [
+  { id: 'station', label: 'Transit station details' },
+  { id: 'food', label: 'Recommended · food' },
+  { id: 'shower', label: 'Recommended · shower' },
+  { id: 'hotel', label: 'Recommended · hotel' },
+  { id: 'tickets', label: 'Tickets' },
+] as const;
+
+type MenuActionId = (typeof MENU_ACTIONS)[number]['id'];
+
+function closeAllMenus(except?: HTMLElement) {
+  document.querySelectorAll('.milestone__menu').forEach((menu) => {
+    if (except && menu === except) return;
+    (menu as HTMLElement).hidden = true;
+    const btn = menu.previousElementSibling as HTMLElement | null;
+    if (btn?.matches('.milestone__menu-btn')) {
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
+function handleMenuAction(action: MenuActionId, m: Milestone) {
+  const station = m.to;
+  const messages: Record<MenuActionId, string> = {
+    station: `${station} · hub notes (curated). Check arrival board, left-luggage, and waiting halls before you connect.`,
+    food: `Food near ${station} · warung & station canteen picks (estimates). Aim for something quick before the next leg.`,
+    shower: `Shower / wash near ${station} · transit hotels & public washrooms when listed. Confirm hours on arrival.`,
+    hotel: `Hotels near ${station} · budget stays within walking distance of the hub (estimates only).`,
+    tickets:
+      m.ticket != null
+        ? `Opening ${m.ticket.provider} for ${m.from} → ${m.to}…`
+        : `No curated ticket link for this leg yet — check the operator desk at ${station}.`,
+  };
+
+  if (action === 'tickets' && m.ticket) {
+    window.open(m.ticket.url, '_blank', 'noopener,noreferrer');
+  }
+  showToast(messages[action]);
+}
+
 function renderMilestones(route: RouteAlternative) {
   const root = $('milestone-list');
   root.innerHTML = '';
+  root.className = 'milestone-timeline';
+  const total = route.milestones.length;
+
   route.milestones.forEach((m, index) => {
     const card = document.createElement('article');
-    card.className = `milestone${m.crossBorder ? ' is-border' : ''}`;
+    const isStart = index === 0;
+    const isEnd = index === total - 1;
+    card.className = [
+      'milestone',
+      m.crossBorder ? 'is-border' : '',
+      isStart ? 'is-start' : '',
+      isEnd ? 'is-end' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+
     const badges = [
       m.estimate ? '<span class="badge">estimate</span>' : '',
       m.crossBorder && m.borderPrep
@@ -165,16 +218,55 @@ function renderMilestones(route: RouteAlternative) {
         ? `<p class="milestone__sub"><a class="milestone__ticket" href="${m.ticket.url}" target="_blank" rel="noopener noreferrer">Buy tickets ↗</a></p>`
         : '';
 
+    const menuItems = MENU_ACTIONS.map(
+      (a) =>
+        `<button type="button" class="milestone__menu-item" data-action="${a.id}">${a.label}</button>`,
+    ).join('');
+
     card.innerHTML = `
-      <div class="milestone__meta">
-        <span>${index + 1}. ${m.mode}</span>
-        <span>${formatDuration(m.durationMin)} · ${formatIdr(m.priceIdr)}${badges}</span>
+      <span class="milestone__rail" aria-hidden="true">
+        <span class="milestone__dot"></span>
+      </span>
+      <div class="milestone__body">
+        <div class="milestone__meta">
+          <span>${index + 1}. ${m.mode}</span>
+          <span>${formatDuration(m.durationMin)} · ${formatIdr(m.priceIdr)}${badges}</span>
+        </div>
+        <p class="milestone__sub">${m.from} → ${m.to}</p>
+        ${ticketLink}
+        ${checklist}
+        ${renderSnapshot(m, index)}
+        <div class="milestone__actions">
+          <button type="button" class="milestone__menu-btn" aria-expanded="false" aria-haspopup="true">
+            Explore nearby
+          </button>
+          <div class="milestone__menu" hidden role="menu">
+            ${menuItems}
+          </div>
+        </div>
       </div>
-      <p class="milestone__sub">${m.from} → ${m.to}</p>
-      ${ticketLink}
-      ${checklist}
-      ${renderSnapshot(m, index)}
     `;
+
+    const menuBtn = card.querySelector('.milestone__menu-btn') as HTMLButtonElement;
+    const menu = card.querySelector('.milestone__menu') as HTMLElement;
+
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = menu.hidden;
+      closeAllMenus(open ? menu : undefined);
+      menu.hidden = !open;
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+
+    menu.querySelectorAll('.milestone__menu-item').forEach((item) => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const action = (item as HTMLElement).dataset.action as MenuActionId;
+        handleMenuAction(action, m);
+        closeAllMenus();
+      });
+    });
+
     root.appendChild(card);
   });
 }
@@ -221,6 +313,9 @@ function runPlan(origin: CityId, destination: CityId, preferredRoute?: string) {
       preferredRoute && rankedList.some((r) => r.id === preferredRoute)
         ? preferredRoute
         : rankedList[0]?.id ?? null;
+    aiDemoPlayed = false;
+    aiDemoRunning = false;
+    $('ai-messages').innerHTML = '';
     renderAll();
     syncUrl();
   } catch (err) {
@@ -244,6 +339,133 @@ async function copyShare() {
   }
 }
 
+type ChatRole = 'user' | 'assistant';
+
+type MockTurn = {
+  role: ChatRole;
+  text: string;
+  delayMs: number;
+};
+
+let aiDemoRunning = false;
+let aiDemoPlayed = false;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
+function appendChatBubble(role: ChatRole, text: string) {
+  const log = $('ai-messages');
+  const bubble = document.createElement('div');
+  bubble.className = `ai-chat__bubble ai-chat__bubble--${role}`;
+  bubble.textContent = text;
+  log.appendChild(bubble);
+  log.scrollTop = log.scrollHeight;
+}
+
+function appendTypingIndicator(): HTMLElement {
+  const log = $('ai-messages');
+  const typing = document.createElement('div');
+  typing.className = 'ai-chat__bubble ai-chat__bubble--assistant ai-chat__typing';
+  typing.setAttribute('aria-label', 'Assistant is typing');
+  typing.innerHTML =
+    '<span class="ai-chat__dot"></span><span class="ai-chat__dot"></span><span class="ai-chat__dot"></span>';
+  log.appendChild(typing);
+  log.scrollTop = log.scrollHeight;
+  return typing;
+}
+
+function mockScript(): MockTurn[] {
+  const route = selectedRoute();
+  const dest = plan?.destination ?? 'your destination';
+  const label = route?.label ?? 'this route';
+  const firstHub = route?.milestones[0]?.to ?? 'the first hub';
+  return [
+    {
+      role: 'user',
+      text: `Any tips for ${label}?`,
+      delayMs: 400,
+    },
+    {
+      role: 'assistant',
+      text: `I'd pad buffers around ${firstHub} — overland schedules slip. Keep passport ready for any cross-border leg, and treat all prices as estimates.`,
+      delayMs: 1400,
+    },
+    {
+      role: 'user',
+      text: 'Where should I sleep if we miss a connection?',
+      delayMs: 900,
+    },
+    {
+      role: 'assistant',
+      text: `Look for transit hotels near the station you land in, then rebook the next morning. For ${dest}, book onward tickets early when possible — weekend buses fill up.`,
+      delayMs: 1600,
+    },
+  ];
+}
+
+async function playAiDemo() {
+  if (aiDemoRunning || aiDemoPlayed) return;
+  aiDemoRunning = true;
+  const log = $('ai-messages');
+  log.innerHTML = '';
+
+  for (const turn of mockScript()) {
+    await sleep(turn.delayMs);
+    if (turn.role === 'assistant') {
+      const typing = appendTypingIndicator();
+      await sleep(1100);
+      typing.remove();
+    }
+    appendChatBubble(turn.role, turn.text);
+  }
+
+  aiDemoPlayed = true;
+  aiDemoRunning = false;
+}
+
+function setAiOpen(open: boolean) {
+  const panel = $('ai-chat-panel');
+  const toggle = $('ai-chat-toggle') as HTMLButtonElement;
+  panel.hidden = !open;
+  toggle.setAttribute('aria-expanded', String(open));
+  if (open) {
+    void playAiDemo();
+  }
+}
+
+function bootAiChat() {
+  const toggle = $('ai-chat-toggle') as HTMLButtonElement;
+  const closeBtn = $('ai-chat-close') as HTMLButtonElement;
+  const form = $('ai-chat-form') as HTMLFormElement;
+  const input = $('ai-chat-input') as HTMLInputElement;
+
+  toggle.addEventListener('click', () => {
+    const panel = $('ai-chat-panel');
+    setAiOpen(panel.hidden);
+  });
+
+  closeBtn.addEventListener('click', () => setAiOpen(false));
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text || aiDemoRunning) return;
+    input.value = '';
+    appendChatBubble('user', text);
+    const typing = appendTypingIndicator();
+    await sleep(1200);
+    typing.remove();
+    const route = selectedRoute();
+    appendChatBubble(
+      'assistant',
+      route
+        ? `Mock reply · for ${route.label}, check Explore nearby on each milestone for station tips, food, showers, hotels, and tickets. Live AI comes later.`
+        : 'Mock reply · plan a route first, then ask again. Live AI comes later.',
+    );
+  });
+}
+
 export function bootPlanner(options: BootOptions) {
   mapsKey = options.mapsKey;
 
@@ -252,6 +474,8 @@ export function bootPlanner(options: BootOptions) {
 
   originEl.value = 'bogor';
   destinationEl.value = 'bangkok';
+
+  document.addEventListener('click', () => closeAllMenus());
 
   $('planner-form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -285,6 +509,8 @@ export function bootPlanner(options: BootOptions) {
   $('share-btn').addEventListener('click', () => {
     void copyShare();
   });
+
+  bootAiChat();
 
   const shared = parseShareUrl(new URLSearchParams(window.location.search));
   if (shared) {

@@ -65,10 +65,31 @@ import { destinations, origins, cityLabel } from '../data/cities';
       <section class="detail" id="route-detail" hidden>
         <p class="section-label">Selected · map + milestones</p>
         <div id="route-map"></div>
-        <div id="milestone-list"></div>
+        <div id="milestone-list" class="milestone-timeline"></div>
         <button type="button" class="btn-share" id="share-btn">Copy share URL</button>
       </section>
     </main>
+
+    <div class="ai-chat" id="ai-chat">
+      <button type="button" class="ai-chat__toggle" id="ai-chat-toggle" aria-expanded="false" aria-controls="ai-chat-panel">
+        Ask ngemper AI
+      </button>
+      <div class="ai-chat__panel" id="ai-chat-panel" hidden role="dialog" aria-label="ngemper AI assistant">
+        <header class="ai-chat__header">
+          <div>
+            <p class="ai-chat__title">ngemper AI</p>
+            <p class="ai-chat__subtitle">Mock assistant · estimates only</p>
+          </div>
+          <button type="button" class="ai-chat__close" id="ai-chat-close" aria-label="Close chat">×</button>
+        </header>
+        <div class="ai-chat__messages" id="ai-messages" aria-live="polite"></div>
+        <form class="ai-chat__form" id="ai-chat-form">
+          <label class="sr-only" for="ai-chat-input">Message</label>
+          <input id="ai-chat-input" type="text" placeholder="Ask about this route…" autocomplete="off" />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
 
     <footer class="footer">
       <p>{FOOTER_COPY}</p>
@@ -173,8 +194,21 @@ import { destinations, origins, cityLabel } from '../data/cities';
   .sort[hidden],
   .main[hidden],
   .toast[hidden],
-  #route-detail[hidden] {
+  #route-detail[hidden],
+  .ai-chat__panel[hidden] {
     display: none !important;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .sort__btn {
