@@ -1,0 +1,12 @@
+---
+globs: src/data/**
+alwaysApply: false
+---
+
+# Corridor / feeder data rules
+
+- Every milestone with crossBorder: true MUST include borderPrep (badge + checklist).
+- legType === "transfer" OR "feeder" ⇒ estimate: true.
+- Prices already in IDR (no runtime FX).
+- Grab/taxi only as short transfer connectors, never long-haul.
+- Route ids stable for share URLs: cheap-overland | faster-hybrid | scenic.

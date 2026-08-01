@@ -1,0 +1,12 @@
+---
+alwaysApply: true
+---
+
+# ngemper.ai
+
+- Stack: Astro 5 static, TypeScript strict, vanilla CSS, vanilla TS island, Vitest. No React/Tailwind/map SDKs.
+- Money: IDR only. Badges: estimate / approx / flight avg.
+- Maps: Google Maps Embed iframe only. Placeholder if PUBLIC_GOOGLE_MAPS_EMBED_KEY missing.
+- Data: curated static JSON. No scraping, booking, live transport APIs, or pathfinding graphs.
+- Honesty: footer "Estimates · curated Aug 2026 · not for booking".
+- Domain logic lives in src/lib/* (no DOM). TDD with Vitest before UI for totals/rank/compose.

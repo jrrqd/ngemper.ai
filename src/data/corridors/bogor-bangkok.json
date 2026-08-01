@@ -1,0 +1,327 @@
+{
+  "id": "bogor-bangkok",
+  "origin": "bogor",
+  "destination": "bangkok",
+  "flightAlternative": {
+    "carrier": "Lion Air / Thai Lion avg",
+    "durationMin": 200,
+    "priceIdr": 2100000,
+    "source": "Traveloka avg, Aug 2026"
+  },
+  "routes": [
+    {
+      "id": "cheap-overland",
+      "label": "Cheapest overland",
+      "milestones": [
+        {
+          "id": "bb-cheap-1",
+          "from": "Bogor",
+          "to": "Jakarta",
+          "mode": "KRL Commuterline",
+          "legType": "feeder",
+          "durationMin": 90,
+          "priceIdr": 20000,
+          "estimate": true,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/JqNGyvbDVeI"
+          },
+          "map": {
+            "lat": -6.5971,
+            "lng": 106.806
+          }
+        },
+        {
+          "id": "bb-cheap-2",
+          "from": "Jakarta",
+          "to": "Hat Yai",
+          "mode": "Bus (Siantar / Damri-style long haul)",
+          "legType": "transit",
+          "durationMin": 2160,
+          "priceIdr": 900000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/RMUlXYbcz2U"
+          },
+          "map": {
+            "lat": -6.1256,
+            "lng": 106.661
+          }
+        },
+        {
+          "id": "bb-cheap-3",
+          "from": "Hat Yai",
+          "to": "Padang Besar",
+          "mode": "Grab/taxi",
+          "legType": "transfer",
+          "durationMin": 60,
+          "priceIdr": 180000,
+          "estimate": true,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/NRa10jJjZfE"
+          },
+          "map": {
+            "lat": 7.0086,
+            "lng": 100.4767
+          }
+        },
+        {
+          "id": "bb-cheap-4",
+          "from": "Padang Besar (MY)",
+          "to": "Padang Besar (TH)",
+          "mode": "Walk border",
+          "legType": "transit",
+          "durationMin": 90,
+          "priceIdr": 0,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border \u00b7 passport required",
+            "checklist": [
+              "Passport valid 6+ months",
+              "Check visa-exempt / VOA for your nationality",
+              "Keep arrival card / TM6 ready if asked"
+            ]
+          },
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/border-checkpoint.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": {
+            "lat": 6.662,
+            "lng": 100.321
+          }
+        },
+        {
+          "id": "bb-cheap-5",
+          "from": "Padang Besar",
+          "to": "Bangkok",
+          "mode": "Train (SRT)",
+          "legType": "transit",
+          "durationMin": 960,
+          "priceIdr": 320000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/bangkok-arrival.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": {
+            "lat": 13.7563,
+            "lng": 100.5018
+          }
+        }
+      ]
+    },
+    {
+      "id": "faster-hybrid",
+      "label": "Faster hybrid",
+      "milestones": [
+        {
+          "id": "bb-fast-1",
+          "from": "Bogor",
+          "to": "Jakarta",
+          "mode": "KRL Commuterline",
+          "legType": "feeder",
+          "durationMin": 90,
+          "priceIdr": 20000,
+          "estimate": true,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/JqNGyvbDVeI"
+          },
+          "map": {
+            "lat": -6.5971,
+            "lng": 106.806
+          }
+        },
+        {
+          "id": "bb-fast-2",
+          "from": "Jakarta",
+          "to": "Kuala Lumpur",
+          "mode": "Flight (short hop)",
+          "legType": "transit",
+          "durationMin": 120,
+          "priceIdr": 900000,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border \u00b7 passport required",
+            "checklist": [
+              "Passport valid 6+ months",
+              "Immigration at KLIA / KL Sentral as needed",
+              "Keep onward ticket handy"
+            ]
+          },
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/RMUlXYbcz2U"
+          },
+          "map": {
+            "lat": 3.139,
+            "lng": 101.6869
+          }
+        },
+        {
+          "id": "bb-fast-3",
+          "from": "KL Sentral",
+          "to": "Hat Yai",
+          "mode": "Bus / train",
+          "legType": "transit",
+          "durationMin": 720,
+          "priceIdr": 450000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/NRa10jJjZfE"
+          },
+          "map": {
+            "lat": 7.0086,
+            "lng": 100.4767
+          }
+        },
+        {
+          "id": "bb-fast-4",
+          "from": "Hat Yai",
+          "to": "Bangkok",
+          "mode": "Train (SRT)",
+          "legType": "transit",
+          "durationMin": 900,
+          "priceIdr": 350000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/bangkok-arrival.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": {
+            "lat": 13.7563,
+            "lng": 100.5018
+          }
+        }
+      ]
+    },
+    {
+      "id": "scenic",
+      "label": "Scenic",
+      "milestones": [
+        {
+          "id": "bb-scenic-1",
+          "from": "Bogor",
+          "to": "Jakarta",
+          "mode": "KRL Commuterline",
+          "legType": "feeder",
+          "durationMin": 90,
+          "priceIdr": 20000,
+          "estimate": true,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/JqNGyvbDVeI"
+          },
+          "map": {
+            "lat": -6.5971,
+            "lng": 106.806
+          }
+        },
+        {
+          "id": "bb-scenic-2",
+          "from": "Jakarta",
+          "to": "Singapore",
+          "mode": "Bus + ferry hops",
+          "legType": "transit",
+          "durationMin": 1440,
+          "priceIdr": 700000,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border \u00b7 passport required",
+            "checklist": [
+              "Passport valid 6+ months",
+              "Check Singapore entry rules",
+              "Keep hotel / onward proof if asked"
+            ]
+          },
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/7QP4NKREhbc"
+          },
+          "map": {
+            "lat": 1.3521,
+            "lng": 103.8198
+          }
+        },
+        {
+          "id": "bb-scenic-3",
+          "from": "Singapore",
+          "to": "Hat Yai",
+          "mode": "Bus / train via Butterworth",
+          "legType": "transit",
+          "durationMin": 720,
+          "priceIdr": 400000,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border \u00b7 passport required",
+            "checklist": [
+              "Passport ready at land border",
+              "Check Thailand entry / VOA",
+              "Keep small cash for local transfers"
+            ]
+          },
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/7QP4NKREhbc"
+          },
+          "map": {
+            "lat": 7.0086,
+            "lng": 100.4767
+          }
+        },
+        {
+          "id": "bb-scenic-4",
+          "from": "Hat Yai",
+          "to": "Bangkok",
+          "mode": "Train (SRT)",
+          "legType": "transit",
+          "durationMin": 960,
+          "priceIdr": 320000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/bangkok-arrival.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": {
+            "lat": 13.7563,
+            "lng": 100.5018
+          }
+        }
+      ]
+    }
+  ]
+}

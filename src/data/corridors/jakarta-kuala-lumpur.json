@@ -1,0 +1,151 @@
+{
+  "id": "jakarta-kuala-lumpur",
+  "origin": "jakarta",
+  "destination": "kuala-lumpur",
+  "flightAlternative": {
+    "carrier": "AirAsia / Batik avg",
+    "durationMin": 120,
+    "priceIdr": 1200000,
+    "source": "Traveloka avg, Aug 2026"
+  },
+  "routes": [
+    {
+      "id": "cheap-overland",
+      "label": "Cheapest overland",
+      "milestones": [
+        {
+          "id": "jkl-cheap-1",
+          "from": "Jakarta",
+          "to": "Dumai",
+          "mode": "Bus / travel",
+          "legType": "transit",
+          "durationMin": 1440,
+          "priceIdr": 450000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/RMUlXYbcz2U"
+          },
+          "map": {
+            "lat": 1.6667,
+            "lng": 101.45
+          }
+        },
+        {
+          "id": "jkl-cheap-2",
+          "from": "Dumai port",
+          "to": "Melaka",
+          "mode": "Ferry",
+          "legType": "transit",
+          "durationMin": 180,
+          "priceIdr": 350000,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border \u00b7 passport required",
+            "checklist": [
+              "Passport valid 6+ months",
+              "Malaysia entry rules for your nationality",
+              "Arrive early for ferry immigration"
+            ]
+          },
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/7QP4NKREhbc"
+          },
+          "map": {
+            "lat": 2.1896,
+            "lng": 102.2501
+          }
+        },
+        {
+          "id": "jkl-cheap-3",
+          "from": "Melaka",
+          "to": "Kuala Lumpur",
+          "mode": "Bus",
+          "legType": "transit",
+          "durationMin": 150,
+          "priceIdr": 80000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/kl-arrival.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": {
+            "lat": 3.139,
+            "lng": 101.6869
+          }
+        }
+      ]
+    },
+    {
+      "id": "faster-hybrid",
+      "label": "Faster hybrid",
+      "milestones": [
+        {
+          "id": "jkl-fast-1",
+          "from": "Jakarta",
+          "to": "Singapore",
+          "mode": "Bus + ferry",
+          "legType": "transit",
+          "durationMin": 1200,
+          "priceIdr": 650000,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border \u00b7 passport required",
+            "checklist": [
+              "Passport valid 6+ months",
+              "Check Singapore entry rules",
+              "Keep onward ticket to KL"
+            ]
+          },
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/7QP4NKREhbc"
+          },
+          "map": {
+            "lat": 1.3521,
+            "lng": 103.8198
+          }
+        },
+        {
+          "id": "jkl-fast-2",
+          "from": "Singapore",
+          "to": "Kuala Lumpur",
+          "mode": "Bus / ETS train",
+          "legType": "transit",
+          "durationMin": 300,
+          "priceIdr": 250000,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border \u00b7 passport required",
+            "checklist": [
+              "Passport at Woodlands / train immigration",
+              "Malaysia entry checklist",
+              "Keep small MYR for local transit"
+            ]
+          },
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/kl-arrival.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": {
+            "lat": 3.139,
+            "lng": 101.6869
+          }
+        }
+      ]
+    }
+  ]
+}

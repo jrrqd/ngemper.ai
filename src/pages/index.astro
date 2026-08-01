@@ -1,0 +1,227 @@
+---
+import '../styles/global.css';
+import { FOOTER_COPY } from '../data/fx';
+import { destinations, origins, cityLabel } from '../data/cities';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="ngemper.ai recommends ranked overland routes across Southeast Asia for Indonesian budget travelers."
+    />
+    <title>ngemper.ai — ranked overland routes for SEA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="hero" style={`background-image: linear-gradient(160deg, rgba(26,46,40,0.82), rgba(90,110,74,0.55)), url('/hero-overland.png');`}>
+      <div class="hero__inner">
+        <p class="hero__eyebrow">Overland · SEA</p>
+        <h1 class="hero__brand">ngemper.ai</h1>
+        <p class="hero__tag">Ranked overland routes for SEA</p>
+
+        <form class="planner" id="planner-form">
+          <label>
+            <span>Origin</span>
+            <select id="origin" name="origin" required>
+              {origins.map((id) => (
+                <option value={id}>{cityLabel(id)}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>Destination</span>
+            <select id="destination" name="destination" required>
+              {destinations.map((id) => (
+                <option value={id}>{cityLabel(id)}</option>
+              ))}
+            </select>
+          </label>
+          <button type="submit" class="btn-plan">Plan</button>
+        </form>
+
+        <div class="sort" id="sort-toggle" hidden>
+          <button type="button" data-sort="cheapest" class="sort__btn is-active">Cheapest</button>
+          <button type="button" data-sort="fastest" class="sort__btn">Fastest</button>
+        </div>
+      </div>
+    </header>
+
+    <p class="toast" id="toast" hidden role="status"></p>
+
+    <main class="main" id="results" hidden>
+      <section class="flight" id="flight-strip" aria-label="Vs flying"></section>
+      <section class="routes" aria-label="Ranked routes">
+        <p class="section-label">Ranked routes</p>
+        <div id="route-list"></div>
+      </section>
+      <section class="detail" id="route-detail" hidden>
+        <p class="section-label">Selected · map + milestones</p>
+        <div id="route-map"></div>
+        <div id="milestone-list"></div>
+        <button type="button" class="btn-share" id="share-btn">Copy share URL</button>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>{FOOTER_COPY}</p>
+    </footer>
+
+    <script>
+      import { bootPlanner } from '../scripts/planner';
+      bootPlanner({
+        mapsKey: import.meta.env.PUBLIC_GOOGLE_MAPS_EMBED_KEY ?? '',
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    color: #f5f0e8;
+    display: flex;
+    align-items: flex-end;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .hero__inner {
+    width: min(100%, var(--max));
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 2rem;
+  }
+
+  .hero__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  .hero__brand {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 10vw, 4rem);
+    font-weight: 700;
+    margin: 0.2rem 0 0.35rem;
+    line-height: 1.05;
+  }
+
+  .hero__tag {
+    margin: 0 0 1.5rem;
+    font-size: 1.05rem;
+    opacity: 0.92;
+  }
+
+  .planner {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .planner {
+      grid-template-columns: 1fr 1fr auto;
+      align-items: end;
+    }
+  }
+
+  .planner label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+  }
+
+  .planner select {
+    width: 100%;
+    padding: 0.7rem 0.75rem;
+    border: 0;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    backdrop-filter: blur(4px);
+  }
+
+  .planner select option {
+    color: #15201c;
+  }
+
+  .btn-plan {
+    padding: 0.75rem 1.25rem;
+    border: 0;
+    border-radius: 4px;
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .sort {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .sort[hidden],
+  .main[hidden],
+  .toast[hidden],
+  #route-detail[hidden] {
+    display: none !important;
+  }
+
+  .sort__btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    color: #fff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .sort__btn.is-active {
+    background: #fff;
+    color: var(--color-hero-from);
+    border-color: #fff;
+  }
+
+  .toast {
+    margin: 0;
+    padding: 0.75rem 1.25rem;
+    background: #5c2b1a;
+    color: #fff;
+    text-align: center;
+  }
+
+  .main {
+    width: min(100%, var(--max));
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 3rem;
+    animation: riseIn 0.45s ease-out;
+  }
+
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding: 1rem 1.25rem 2rem;
+    text-align: center;
+    color: var(--color-ink-muted);
+    font-size: 0.85rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

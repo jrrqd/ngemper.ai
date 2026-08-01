@@ -1,0 +1,143 @@
+{
+  "id": "jakarta-singapore",
+  "origin": "jakarta",
+  "destination": "singapore",
+  "flightAlternative": {
+    "carrier": "Scoot / Citilink avg",
+    "durationMin": 105,
+    "priceIdr": 1100000,
+    "source": "Traveloka avg, Aug 2026"
+  },
+  "routes": [
+    {
+      "id": "cheap-overland",
+      "label": "Cheapest overland",
+      "milestones": [
+        {
+          "id": "js-cheap-1",
+          "from": "Jakarta",
+          "to": "Batam",
+          "mode": "Bus + ferry package",
+          "legType": "transit",
+          "durationMin": 720,
+          "priceIdr": 450000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/7QP4NKREhbc"
+          },
+          "map": {
+            "lat": 1.0456,
+            "lng": 104.0305
+          }
+        },
+        {
+          "id": "js-cheap-2",
+          "from": "Batam Centre",
+          "to": "HarbourFront",
+          "mode": "Ferry",
+          "legType": "transit",
+          "durationMin": 60,
+          "priceIdr": 350000,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border \u00b7 passport required",
+            "checklist": [
+              "Passport valid 6+ months",
+              "Check Singapore entry / SG Arrival Card",
+              "Arrive early for ferry immigration"
+            ]
+          },
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/7QP4NKREhbc"
+          },
+          "map": {
+            "lat": 1.2644,
+            "lng": 103.8203
+          }
+        },
+        {
+          "id": "js-cheap-3",
+          "from": "HarbourFront",
+          "to": "City centre",
+          "mode": "MRT / Grab",
+          "legType": "transfer",
+          "durationMin": 40,
+          "priceIdr": 50000,
+          "estimate": true,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/singapore-mrt.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": {
+            "lat": 1.3521,
+            "lng": 103.8198
+          }
+        }
+      ]
+    },
+    {
+      "id": "faster-hybrid",
+      "label": "Faster hybrid",
+      "milestones": [
+        {
+          "id": "js-fast-1",
+          "from": "Jakarta",
+          "to": "Tanjung Pinang",
+          "mode": "Flight / fast boat combo",
+          "legType": "transit",
+          "durationMin": 240,
+          "priceIdr": 700000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/RMUlXYbcz2U"
+          },
+          "map": {
+            "lat": 0.9186,
+            "lng": 104.4665
+          }
+        },
+        {
+          "id": "js-fast-2",
+          "from": "Bintan",
+          "to": "Tanah Merah",
+          "mode": "Ferry",
+          "legType": "transit",
+          "durationMin": 75,
+          "priceIdr": 400000,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border \u00b7 passport required",
+            "checklist": [
+              "Passport valid 6+ months",
+              "SG Arrival Card",
+              "Keep hotel booking if asked"
+            ]
+          },
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/ferry-wake.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": {
+            "lat": 1.3147,
+            "lng": 103.988
+          }
+        }
+      ]
+    }
+  ]
+}

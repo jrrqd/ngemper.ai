@@ -1,0 +1,101 @@
+[
+  {
+    "id": "bogor-jakarta-feeder",
+    "origin": "bogor",
+    "hub": "jakarta",
+    "from": "Bogor",
+    "to": "Jakarta",
+    "mode": "KRL Commuterline",
+    "legType": "feeder",
+    "durationMin": 90,
+    "priceIdr": 20000,
+    "estimate": true,
+    "crossBorder": false,
+    "snapshot": {
+      "type": "embed",
+      "provider": "youtube",
+      "url": "https://www.youtube.com/embed/JqNGyvbDVeI"
+    },
+    "map": { "lat": -6.5971, "lng": 106.806 }
+  },
+  {
+    "id": "bekasi-jakarta-feeder",
+    "origin": "bekasi",
+    "hub": "jakarta",
+    "from": "Bekasi",
+    "to": "Jakarta",
+    "mode": "KRL Commuterline",
+    "legType": "feeder",
+    "durationMin": 60,
+    "priceIdr": 10000,
+    "estimate": true,
+    "crossBorder": false,
+    "snapshot": {
+      "type": "static",
+      "image": "/snapshots/krl-platform.png",
+      "creator": "@ngemper.clips",
+      "url": "https://www.youtube.com/@ngemper"
+    },
+    "map": { "lat": -6.2383, "lng": 106.9756 }
+  },
+  {
+    "id": "bandung-jakarta-feeder",
+    "origin": "bandung",
+    "hub": "jakarta",
+    "from": "Bandung",
+    "to": "Jakarta",
+    "mode": "Kereta Api / travel bus",
+    "legType": "feeder",
+    "durationMin": 180,
+    "priceIdr": 150000,
+    "estimate": true,
+    "crossBorder": false,
+    "snapshot": {
+      "type": "static",
+      "image": "/snapshots/bandung-train.png",
+      "creator": "@ngemper.clips",
+      "url": "https://www.youtube.com/@ngemper"
+    },
+    "map": { "lat": -6.9175, "lng": 107.6191 }
+  },
+  {
+    "id": "yogyakarta-jakarta-feeder",
+    "origin": "yogyakarta",
+    "hub": "jakarta",
+    "from": "Yogyakarta",
+    "to": "Jakarta",
+    "mode": "Kereta Api",
+    "legType": "feeder",
+    "durationMin": 480,
+    "priceIdr": 350000,
+    "estimate": true,
+    "crossBorder": false,
+    "snapshot": {
+      "type": "static",
+      "image": "/snapshots/long-train.png",
+      "creator": "@ngemper.clips",
+      "url": "https://www.youtube.com/@ngemper"
+    },
+    "map": { "lat": -7.7956, "lng": 110.3695 }
+  },
+  {
+    "id": "surabaya-jakarta-feeder",
+    "origin": "surabaya",
+    "hub": "jakarta",
+    "from": "Surabaya",
+    "to": "Jakarta",
+    "mode": "Kereta Api",
+    "legType": "feeder",
+    "durationMin": 600,
+    "priceIdr": 450000,
+    "estimate": true,
+    "crossBorder": false,
+    "snapshot": {
+      "type": "static",
+      "image": "/snapshots/long-train.png",
+      "creator": "@ngemper.clips",
+      "url": "https://www.youtube.com/@ngemper"
+    },
+    "map": { "lat": -7.2575, "lng": 112.7521 }
+  }
+]

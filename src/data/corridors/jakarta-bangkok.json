@@ -1,0 +1,164 @@
+{
+  "id": "jakarta-bangkok",
+  "origin": "jakarta",
+  "destination": "bangkok",
+  "flightAlternative": {
+    "carrier": "Lion Air / Thai Lion avg",
+    "durationMin": 180,
+    "priceIdr": 1900000,
+    "source": "Traveloka avg, Aug 2026"
+  },
+  "routes": [
+    {
+      "id": "cheap-overland",
+      "label": "Cheapest overland",
+      "milestones": [
+        {
+          "id": "jb-cheap-1",
+          "from": "Jakarta",
+          "to": "Hat Yai",
+          "mode": "Bus (long haul)",
+          "legType": "transit",
+          "durationMin": 2160,
+          "priceIdr": 900000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/RMUlXYbcz2U"
+          },
+          "map": { "lat": -6.1256, "lng": 106.661 }
+        },
+        {
+          "id": "jb-cheap-2",
+          "from": "Hat Yai",
+          "to": "Padang Besar",
+          "mode": "Grab/taxi",
+          "legType": "transfer",
+          "durationMin": 60,
+          "priceIdr": 180000,
+          "estimate": true,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/grab-transfer.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": { "lat": 7.0086, "lng": 100.4767 }
+        },
+        {
+          "id": "jb-cheap-3",
+          "from": "Padang Besar (MY)",
+          "to": "Padang Besar (TH)",
+          "mode": "Walk border",
+          "legType": "transit",
+          "durationMin": 90,
+          "priceIdr": 0,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border · passport required",
+            "checklist": [
+              "Passport valid 6+ months",
+              "Check visa-exempt / VOA for your nationality",
+              "Keep arrival card ready if asked"
+            ]
+          },
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/border-checkpoint.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": { "lat": 6.662, "lng": 100.321 }
+        },
+        {
+          "id": "jb-cheap-4",
+          "from": "Padang Besar",
+          "to": "Bangkok",
+          "mode": "Train (SRT)",
+          "legType": "transit",
+          "durationMin": 960,
+          "priceIdr": 320000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/bangkok-arrival.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": { "lat": 13.7563, "lng": 100.5018 }
+        }
+      ]
+    },
+    {
+      "id": "faster-hybrid",
+      "label": "Faster hybrid",
+      "milestones": [
+        {
+          "id": "jb-fast-1",
+          "from": "Jakarta",
+          "to": "Kuala Lumpur",
+          "mode": "Flight (short hop)",
+          "legType": "transit",
+          "durationMin": 120,
+          "priceIdr": 900000,
+          "estimate": false,
+          "crossBorder": true,
+          "borderPrep": {
+            "badge": "Cross-border · passport required",
+            "checklist": [
+              "Passport valid 6+ months",
+              "Immigration at KLIA",
+              "Keep onward ticket handy"
+            ]
+          },
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/RMUlXYbcz2U"
+          },
+          "map": { "lat": 3.139, "lng": 101.6869 }
+        },
+        {
+          "id": "jb-fast-2",
+          "from": "KL Sentral",
+          "to": "Hat Yai",
+          "mode": "Bus / train",
+          "legType": "transit",
+          "durationMin": 720,
+          "priceIdr": 450000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "embed",
+            "provider": "youtube",
+            "url": "https://www.youtube.com/embed/NRa10jJjZfE"
+          },
+          "map": { "lat": 7.0086, "lng": 100.4767 }
+        },
+        {
+          "id": "jb-fast-3",
+          "from": "Hat Yai",
+          "to": "Bangkok",
+          "mode": "Train (SRT)",
+          "legType": "transit",
+          "durationMin": 900,
+          "priceIdr": 350000,
+          "estimate": false,
+          "crossBorder": false,
+          "snapshot": {
+            "type": "static",
+            "image": "/snapshots/bangkok-arrival.png",
+            "creator": "@ngemper.clips",
+            "url": "https://www.youtube.com/@ngemper"
+          },
+          "map": { "lat": 13.7563, "lng": 100.5018 }
+        }
+      ]
+    }
+  ]
+}
