@@ -1,0 +1,105 @@
+---
+alwaysApply: true
+---
+
+# design-taste-astro (translated from design-taste-frontend)
+
+Translated anti-slop rules for the **ngemper.ai** Astro + vanilla CSS stack.
+Skip the React / Tailwind / Motion / GSAP sections of the upstream skill; keep
+everything that survives without those tools.
+
+## Brief inference
+
+Before any page-level work, state a one-line **Design Read**:
+
+> Reading this as: `<page kind>` for `<audience>`, with a `<vibe>` language,
+> leaning toward `<aesthetic family>`.
+
+ngemper.ai reads as: **single-page POC planner for Indonesian budget travelers
+on a first SEA overland trip, with a field-guide / editorial language, leaning
+toward cool-ink + mustard on off-white, calm motion, no Awwwards tricks.**
+
+## Three dials (set per task, baseline `8 / 6 / 4`)
+
+- `DESIGN_VARIANCE` (1-10) - layout asymmetry / off-grid compositions
+- `MOTION_INTENSITY` (1-10) - hover, entry, scroll-driven movement
+- `VISUAL_DENSITY` (1-10) - section padding, card density
+
+Translate to vanilla-CSS:
+
+- `MOTION` > 3 must respect `prefers-reduced-motion`. Use CSS
+  `transition` + `@keyframes` + `IntersectionObserver` for scroll reveals.
+  No `window.addEventListener('scroll')` listener loops.
+- Animate only `transform` and `opacity`.
+- `DESIGN_VARIANCE` 4-10 must declare explicit mobile collapse
+  (`< 768px` -> single column, `max-w-[var(--max)] mx-auto`).
+
+## Hard rules
+
+- **Zero em-dashes (`—`)** anywhere visible. Use `-`, `.`, `,`, or `:`. If a
+  string contains `—`, rewrite before shipping.
+- **Hero fits the viewport**: headline ≤ 2 lines, subtext ≤ 20 words and
+  ≤ 4 lines, primary CTA visible without scroll.
+- **Hero top padding**: max `6rem` at desktop. Use `min-height: 100dvh`, never
+  `100vh` (iOS Safari address-bar jump).
+- **One eyebrow per 3 sections, max**. Hero counts as 1. Mechanical check:
+  `text-transform: uppercase; letter-spacing` on small labels above headlines
+  must total `ceil(sectionCount / 3)` or fewer.
+- **One theme per page** (light or dark, locked).
+- **One accent color** across the whole page - lock it in `:root`, audit every
+  CTA / link / border-active state before shipping.
+- **One shape system** (corner-radius scale). Mixed allowed only with a
+  documented rule (e.g. "buttons pill, cards 4px, inputs 4px") followed
+  everywhere.
+- **CTA contrast**: every CTA label must pass WCAG AA against its background
+  (4.5:1 body, 3:1 large text 18px+). Audit before shipping.
+- **No duplicate CTA intent** on one page (e.g. don't ship "Copy share URL"
+  next to a "Share" link that opens the same thing).
+- **Real assets or labeled placeholders**. No div-based fake product UI.
+  No fake version labels in hero (`V0.6`, `BETA`, `INVITE-ONLY`).
+
+## AI tells to avoid
+
+- Fraunces, Instrument Serif, or any LLM-favorite display serif as default.
+  Default to a strong sans display (Bricolage Grotesque, Cabinet Grotesk,
+  Geist, Sora).
+- Inter as the default sans body unless the brand explicitly asks for it.
+  Source Sans 3 is acceptable here as an Indonesian-readable body face.
+- AI-purple / neon glow / centered dark-mesh hero as default.
+- Warm beige + brass + oxblood + espresso cream palette for premium-consumer
+  briefs. ngemper.ai uses **cool ink** + **mustard** + **forest** instead -
+  not the warm-paper cream family.
+- Three equal feature cards. Use asymmetric grids or stacked layouts.
+- Generic `border-t` + `border-b` on every row of long lists. Use hairlines
+  sparingly or group with cards.
+- Em-dash anywhere (see above).
+- Decorative colored status dots before every nav/badge/list item.
+- Section-numbering eyebrows (`01 / INDEX`, `006 · Capabilities`).
+- Locale / city / time / weather strips unless the brief is genuinely
+  place-focused.
+- Scroll cues (`Scroll`, `↓ scroll`) and animated mouse-wheel icons.
+- Photo-credit captions as decoration (`Field study no. 12 · Ines Caetano`).
+- "Quietly in use at" / "Quietly trusted by" social-proof headers.
+- Mock-humble industry references ("We respect the French ones") in copy.
+
+## Performance & a11y
+
+- LCP < 2.5s. Hero image (`/hero-overland.png`) must be preloaded.
+- INP < 200ms. Heavy work off main thread (no scroll listeners in render).
+- CLS < 0.1. Reserve aspect-ratio on iframes, images, map embeds.
+- `prefers-reduced-motion: reduce` must collapse all infinite loops, parallax,
+  and entry transitions.
+- Form / select / button labels must pass WCAG AA contrast.
+
+## Stack constraints (from project.mdc - always primary)
+
+- Astro 5 static, TypeScript strict, vanilla CSS, vanilla TS island, Vitest.
+- No React, Tailwind, Motion, GSAP, map SDKs.
+- Money: IDR only, badges `estimate` / `approx` / `flight avg`.
+- Maps: Google Maps Embed iframe only. Placeholder if key missing.
+- Domain logic in `src/lib/*`, TDD with Vitest before UI for totals / rank /
+  compose.
+- Footer: `Estimates · curated Aug 2026 · not for booking`.
+
+These two rule files (`project.mdc` + `design-taste-astro.mdc`) are the only
+overlays. Do not invent new wrappers or conventions.

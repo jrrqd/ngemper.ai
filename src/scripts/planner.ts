@@ -42,7 +42,16 @@ function selectedRoute(): RouteAlternative | null {
 function renderFlight() {
   if (!plan) return;
   const f = plan.flightAlternative;
-  $('flight-strip').innerHTML = `<strong>Vs flying</strong> · ${f.carrier} · ${formatDuration(f.durationMin)} · ${formatIdr(f.priceIdr)} <span class="badge">flight avg</span>`;
+  const strip = $('flight-strip');
+  strip.innerHTML = `
+    <strong>Vs flying</strong>
+    <span>${f.carrier}</span>
+    <span aria-hidden="true">·</span>
+    <span>${formatDuration(f.durationMin)}</span>
+    <span aria-hidden="true">·</span>
+    <span>${formatIdr(f.priceIdr)}</span>
+    <span class="badge">flight avg</span>
+  `;
 }
 
 function renderHubStream(hubs: string[]): string {
@@ -80,7 +89,11 @@ function renderRoutes() {
           <span class="route-card__label">${route.label}</span>
           ${best}
         </div>
-        <div class="route-card__meta">${formatIdr(totalPriceIdr(route))} · ${formatDuration(totalDurationMin(route))}</div>
+        <div class="route-card__meta">
+          <span>${formatIdr(totalPriceIdr(route))}</span>
+          <span aria-hidden="true">·</span>
+          <span>${formatDuration(totalDurationMin(route))}</span>
+        </div>
       </div>
       <div class="route-card__save">Save ${formatIdr(save)} vs flying</div>
       ${renderHubStream(hubs)}
@@ -92,6 +105,10 @@ function renderRoutes() {
     });
     root.appendChild(btn);
   });
+  const count = $('route-count');
+  if (count) {
+    count.textContent = list.length === 1 ? '1 option' : `${list.length} options`;
+  }
 }
 
 function renderMap(milestones: Milestone[]) {
@@ -99,7 +116,7 @@ function renderMap(milestones: Milestone[]) {
   const url = mapsEmbedUrl(milestones, mapsKey);
   if (!url) {
     mapRoot.innerHTML =
-      '<div class="map-placeholder">Map unavailable — set PUBLIC_GOOGLE_MAPS_EMBED_KEY</div>';
+      '<div class="map-placeholder">Map unavailable. Set PUBLIC_GOOGLE_MAPS_EMBED_KEY to enable.</div>';
     return;
   }
   mapRoot.innerHTML = `<iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${url}" title="Route checkpoints map"></iframe>`;
@@ -131,8 +148,9 @@ function renderSnapshot(m: Milestone, index: number): string {
           <img src="${m.snapshot.image}" alt="Travel still: ${leg}" loading="lazy" />
         </div>
         <figcaption class="snapshot__caption">
+          <span>Travel still</span>
+          <span aria-hidden="true">·</span>
           <a href="${m.snapshot.url}" target="_blank" rel="noreferrer">${m.snapshot.creator}</a>
-          · still
         </figcaption>
       </figure>`;
   }
@@ -143,10 +161,10 @@ function renderSnapshot(m: Milestone, index: number): string {
 }
 
 const MENU_ACTIONS = [
-  { id: 'station', label: 'Transit station details' },
-  { id: 'food', label: 'Recommended · food' },
-  { id: 'shower', label: 'Recommended · shower' },
-  { id: 'hotel', label: 'Recommended · hotel' },
+  { id: 'station', label: 'Station details' },
+  { id: 'food', label: 'Food nearby' },
+  { id: 'shower', label: 'Shower and wash' },
+  { id: 'hotel', label: 'Hotel nearby' },
   { id: 'tickets', label: 'Tickets' },
 ] as const;
 
@@ -166,14 +184,14 @@ function closeAllMenus(except?: HTMLElement) {
 function handleMenuAction(action: MenuActionId, m: Milestone) {
   const station = m.to;
   const messages: Record<MenuActionId, string> = {
-    station: `${station} · hub notes (curated). Check arrival board, left-luggage, and waiting halls before you connect.`,
-    food: `Food near ${station} · warung & station canteen picks (estimates). Aim for something quick before the next leg.`,
-    shower: `Shower / wash near ${station} · transit hotels & public washrooms when listed. Confirm hours on arrival.`,
-    hotel: `Hotels near ${station} · budget stays within walking distance of the hub (estimates only).`,
+    station: `${station}: hub notes (curated). Check the arrival board, left-luggage, and waiting halls before you connect.`,
+    food: `Food near ${station}: warung and station canteen picks (estimates). Aim for something quick before the next leg.`,
+    shower: `Shower and wash near ${station}: transit hotels and public washrooms when listed. Confirm hours on arrival.`,
+    hotel: `Hotels near ${station}: budget stays within walking distance of the hub (estimates only).`,
     tickets:
       m.ticket != null
-        ? `Opening ${m.ticket.provider} for ${m.from} → ${m.to}…`
-        : `No curated ticket link for this leg yet — check the operator desk at ${station}.`,
+        ? `Opening ${m.ticket.provider} for ${m.from} → ${m.to}.`
+        : `No curated ticket link for this leg yet. Check the operator desk at ${station}.`,
   };
 
   if (action === 'tickets' && m.ticket) {
@@ -229,8 +247,8 @@ function renderMilestones(route: RouteAlternative) {
       </span>
       <div class="milestone__body">
         <div class="milestone__meta">
-          <span>${index + 1}. ${m.mode}</span>
-          <span>${formatDuration(m.durationMin)} · ${formatIdr(m.priceIdr)}${badges}</span>
+          <span class="milestone__mode">${index + 1}. ${m.mode}</span>
+          <span class="milestone__cost">${formatDuration(m.durationMin)} <span aria-hidden="true">·</span> ${formatIdr(m.priceIdr)}${badges}</span>
         </div>
         <p class="milestone__sub">${m.from} → ${m.to}</p>
         ${ticketLink}
@@ -274,12 +292,17 @@ function renderMilestones(route: RouteAlternative) {
 function renderDetail() {
   const route = selectedRoute();
   const detail = $('route-detail');
+  const meta = $('selected-meta');
   if (!route) {
     detail.hidden = true;
+    if (meta) meta.textContent = '';
     return;
   }
   detail.hidden = false;
   selectedRouteId = route.id;
+  if (meta) {
+    meta.textContent = `${route.label} · ${route.milestones.length} stops`;
+  }
   renderMap(route.milestones);
   renderMilestones(route);
 }
@@ -388,7 +411,7 @@ function mockScript(): MockTurn[] {
     },
     {
       role: 'assistant',
-      text: `I'd pad buffers around ${firstHub} — overland schedules slip. Keep passport ready for any cross-border leg, and treat all prices as estimates.`,
+      text: `I'd pad buffers around ${firstHub}: overland schedules slip. Keep passport ready for any cross-border leg, and treat all prices as estimates.`,
       delayMs: 1400,
     },
     {
@@ -398,7 +421,7 @@ function mockScript(): MockTurn[] {
     },
     {
       role: 'assistant',
-      text: `Look for transit hotels near the station you land in, then rebook the next morning. For ${dest}, book onward tickets early when possible — weekend buses fill up.`,
+      text: `Look for transit hotels near the station you land in, then rebook the next morning. For ${dest}, book onward tickets early when possible. Weekend buses fill up.`,
       delayMs: 1600,
     },
   ];
@@ -460,8 +483,8 @@ function bootAiChat() {
     appendChatBubble(
       'assistant',
       route
-        ? `Mock reply · for ${route.label}, check Explore nearby on each milestone for station tips, food, showers, hotels, and tickets. Live AI comes later.`
-        : 'Mock reply · plan a route first, then ask again. Live AI comes later.',
+        ? `Mock reply: for ${route.label}, check Explore nearby on each milestone for station tips, food, showers, hotels, and tickets. Live AI comes later.`
+        : 'Mock reply: plan a route first, then ask again. Live AI comes later.',
     );
   });
 }
@@ -524,6 +547,6 @@ export function bootPlanner(options: BootOptions) {
       );
     runPlan(shared.origin, shared.destination, shared.route);
   } else if (window.location.search) {
-    showToast('Invalid share link — pick cities and plan again');
+    showToast('Invalid share link. Pick cities and plan again.');
   }
 }
