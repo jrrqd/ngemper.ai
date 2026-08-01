@@ -23,6 +23,7 @@
           "priceIdr": 900000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -84,6 +85,7 @@
           "priceIdr": 320000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "static",
             "image": "/snapshots/bangkok-arrival.png",
@@ -116,6 +118,7 @@
               "Keep onward ticket handy"
             ]
           },
+          "ticket": { "provider": "Traveloka", "url": "https://www.traveloka.com/en-id/flight" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -133,6 +136,7 @@
           "priceIdr": 450000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -150,6 +154,7 @@
           "priceIdr": 350000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "static",
             "image": "/snapshots/bangkok-arrival.png",

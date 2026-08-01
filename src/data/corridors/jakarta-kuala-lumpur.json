@@ -23,6 +23,7 @@
           "priceIdr": 450000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -51,6 +52,7 @@
               "Arrive early for ferry immigration"
             ]
           },
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -71,6 +73,7 @@
           "priceIdr": 80000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "static",
             "image": "/snapshots/kl-arrival.png",
@@ -106,6 +109,7 @@
               "Keep onward ticket to KL"
             ]
           },
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -134,6 +138,7 @@
               "Keep small MYR for local transit"
             ]
           },
+          "ticket": { "provider": "KTMB", "url": "https://www.ktmb.com.my" },
           "snapshot": {
             "type": "static",
             "image": "/snapshots/kl-arrival.png",

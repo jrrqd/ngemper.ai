@@ -160,12 +160,18 @@ function renderMilestones(route: RouteAlternative) {
         ? `<ul class="checklist">${m.borderPrep.checklist.map((c) => `<li>${c}</li>`).join('')}</ul>`
         : '';
 
+    const ticketLink =
+      m.legType === 'transit' && m.ticket
+        ? `<p class="milestone__sub"><a class="milestone__ticket" href="${m.ticket.url}" target="_blank" rel="noopener noreferrer">Buy tickets ↗</a></p>`
+        : '';
+
     card.innerHTML = `
       <div class="milestone__meta">
         <span>${index + 1}. ${m.mode}</span>
         <span>${formatDuration(m.durationMin)} · ${formatIdr(m.priceIdr)}${badges}</span>
       </div>
       <p class="milestone__sub">${m.from} → ${m.to}</p>
+      ${ticketLink}
       ${checklist}
       ${renderSnapshot(m, index)}
     `;

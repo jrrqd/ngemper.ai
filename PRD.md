@@ -10,6 +10,19 @@ Gas hikes make intercity and regional travel expensive. Flying from cities like 
 
 **ngemper.ai** recommends ranked overland routes between curated SEA cities so an Indonesian budget traveler can pick the best route — with budget, time, map checkpoints, border prep, and a vs-flying comparison.
 
+## Stage
+
+This workshop deliverable is a **POC only** — prove the core loop (pick cities → ranked overland routes → map / border / vs-flying) with curated data. Not a production commerce product.
+
+### Future monetization (out of scope for POC)
+
+Planned later, not built now:
+
+1. **Affiliate ticket sales** — deep links / referral to booking partners (train, bus, ferry, flight) when the user is ready to buy a leg. POC ships curated outbound **Buy tickets** links on transit milestones as the seam; referral IDs / tracking come later.
+2. **Paid AI assistant** — subscription or usage-priced helper for itinerary Q&A, border/visa nuance, and trip tweaks beyond the static recommender.
+
+POC must not implement payments, affiliate tracking, paywalls, or the AI assistant.
+
 ## Primary persona
 
 Indonesian budget traveler on a **first SEA overland trip** (not digital nomads, not global freestyle search).
@@ -78,6 +91,8 @@ Indonesian budget traveler on a **first SEA overland trip** (not digital nomads,
 ## Non-goals
 
 - No real-time booking or payments.
+- No affiliate referral tracking, partner SDKs, or monetization paywalls (post-POC). Curated outbound ticket links on transit milestones are allowed as the affiliate seam.
+- No paid or free AI assistant in this build (post-POC).
 - No live flight or social scraping on day 1 (curated averages / curated embed URLs).
 - No accounts or saved trips (URL is persistence).
 - No free-text any-city search (v2).
@@ -103,6 +118,7 @@ Indonesian budget traveler on a **first SEA overland trip** (not digital nomads,
 
 ## Constraints
 
+- Scope is **POC** — validate the recommender loop; monetization comes later.
 - ~3 hour workshop build on the user's machine.
 - Deploy: Netlify (static preferred) or Railway if needed.
 - Data: static JSON in repo; no third-party transport APIs for MVP.

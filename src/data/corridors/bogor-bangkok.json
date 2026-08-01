@@ -43,6 +43,7 @@
           "priceIdr": 900000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -112,6 +113,7 @@
           "priceIdr": 320000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "static",
             "image": "/snapshots/bangkok-arrival.png",
@@ -167,6 +169,7 @@
               "Keep onward ticket handy"
             ]
           },
+          "ticket": { "provider": "Traveloka", "url": "https://www.traveloka.com/en-id/flight" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -187,6 +190,7 @@
           "priceIdr": 450000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -207,6 +211,7 @@
           "priceIdr": 350000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "static",
             "image": "/snapshots/bangkok-arrival.png",
@@ -262,6 +267,7 @@
               "Keep hotel / onward proof if asked"
             ]
           },
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -290,6 +296,7 @@
               "Keep small cash for local transfers"
             ]
           },
+          "ticket": { "provider": "KTMB", "url": "https://www.ktmb.com.my" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -310,6 +317,7 @@
           "priceIdr": 320000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "static",
             "image": "/snapshots/bangkok-arrival.png",

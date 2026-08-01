@@ -23,6 +23,7 @@
           "priceIdr": 450000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -51,6 +52,7 @@
               "Arrive early for ferry immigration"
             ]
           },
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -98,6 +100,7 @@
           "priceIdr": 700000,
           "estimate": false,
           "crossBorder": false,
+          "ticket": { "provider": "Traveloka", "url": "https://www.traveloka.com/en-id/flight" },
           "snapshot": {
             "type": "embed",
             "provider": "youtube",
@@ -126,6 +129,7 @@
               "Keep hotel booking if asked"
             ]
           },
+          "ticket": { "provider": "12Go", "url": "https://12go.asia/en" },
           "snapshot": {
             "type": "static",
             "image": "/snapshots/ferry-wake.png",

@@ -26,6 +26,11 @@ export type BorderPrep = {
   checklist: string[];
 };
 
+export type TicketLink = {
+  url: string;
+  provider: string;
+};
+
 export type Milestone = {
   id: string;
   from: string;
@@ -37,6 +42,8 @@ export type Milestone = {
   estimate: boolean;
   crossBorder: boolean;
   borderPrep?: BorderPrep;
+  /** Curated ticket URL; future affiliate seam (no ref IDs yet). */
+  ticket?: TicketLink;
   snapshot: Snapshot;
   map: { lat: number; lng: number };
 };

@@ -254,6 +254,17 @@ select {
   margin: 0.35rem 0 0;
 }
 
+.milestone__ticket {
+  color: var(--color-ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.milestone__ticket:hover {
+  opacity: 0.75;
+}
+
 .snapshot {
   margin: 0.75rem 0 0;
   padding: 0;
